@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Diagnostics;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
@@ -8,6 +8,11 @@ namespace Autocad
 {
   public class AutocadComponent : GH_Component
   {
+    private int _scriptIn;
+    private int _fileIn;
+    private int _runIn;
+    private int _pathIn;
+
     /// <summary>
     /// Each implementation of GH_Component must provide a public 
     /// constructor without any arguments.
@@ -27,6 +32,10 @@ namespace Autocad
     /// </summary>
     protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
     {
+      _pathIn = pManager.AddTextParameter("Autocad path", "A", "accoreconsole.exe path", GH_ParamAccess.item);
+      _scriptIn = pManager.AddTextParameter("Script", "S", "Autocad script", GH_ParamAccess.list);
+      _fileIn = pManager.AddTextParameter("Out file", "O", "Output DWG", GH_ParamAccess.item);
+      _runIn = pManager.AddBooleanParameter("Run", "R", "Run", GH_ParamAccess.item, false);
     }
 
     /// <summary>
@@ -39,10 +48,32 @@ namespace Autocad
     /// <summary>
     /// This is the method that actually does the work.
     /// </summary>
-    /// <param name="DA">The DA object can be used to retrieve data from input parameters and 
+    /// <param name="da">The DA object can be used to retrieve data from input parameters and 
     /// to store data in output parameters.</param>
-    protected override void SolveInstance(IGH_DataAccess DA)
+    protected override void SolveInstance(IGH_DataAccess da)
     {
+      var autocadPath = "";
+      da.GetData(_pathIn, ref autocadPath);
+      if (!System.IO.File.Exists(autocadPath))
+      {
+        throw new Exception("Autocad console executable not found");
+      }
+      var run = false;
+      da.GetData(_runIn, ref run);
+      if (!run) return;
+      var script = new List<string>();
+      da.GetDataList(_scriptIn, script);
+      var outFilePath = "";
+      da.GetData(_fileIn, ref outFilePath);
+      if(System.IO.File.Exists(outFilePath)) System.IO.File.Delete(outFilePath);
+      var scriptFilePath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), Guid.NewGuid() + ".scr");
+      System.IO.File.WriteAllText(scriptFilePath, string.Join("\n", script) + $"_saveas\n\n{outFilePath}\nexit\n");
+      var processInfo = new ProcessStartInfo
+      {
+        FileName = autocadPath,
+        Arguments = $"/s {scriptFilePath}"
+      };
+      var procces = Process.Start(processInfo);
     }
 
     /// <summary>
