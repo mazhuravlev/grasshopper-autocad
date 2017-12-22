@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autocad", "Autocad\Autocad.csproj", "{CDCDCA61-A2C6-4CEE-95E6-21C495C3693D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug32|Any CPU = Debug32|Any CPU
+		Debug64|Any CPU = Debug64|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CDCDCA61-A2C6-4CEE-95E6-21C495C3693D}.Debug32|Any CPU.ActiveCfg = Debug32|Any CPU
+		{CDCDCA61-A2C6-4CEE-95E6-21C495C3693D}.Debug32|Any CPU.Build.0 = Debug32|Any CPU
+		{CDCDCA61-A2C6-4CEE-95E6-21C495C3693D}.Debug64|Any CPU.ActiveCfg = Debug64|Any CPU
+		{CDCDCA61-A2C6-4CEE-95E6-21C495C3693D}.Debug64|Any CPU.Build.0 = Debug64|Any CPU
+		{CDCDCA61-A2C6-4CEE-95E6-21C495C3693D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDCDCA61-A2C6-4CEE-95E6-21C495C3693D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3D1647F0-C47C-4143-B357-3E62D670A9E6}
+	EndGlobalSection
+EndGlobal
